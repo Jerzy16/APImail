@@ -4,7 +4,7 @@ import { ContactDto } from './dto/contact.dto';
 
 @Injectable()
 export class ContactService {
-  constructor(private readonly mailerService: MailerService) {}
+  constructor(private readonly mailerService: MailerService) { }
 
   async sendContactEmail(contactDto: ContactDto): Promise<{ message: string }> {
     const { name, email, subject, message } = contactDto;
@@ -37,7 +37,12 @@ export class ContactService {
     } catch (error) {
       console.error('Error al enviar el email:', error);
       throw new InternalServerErrorException(
-        'Error al enviar el mensaje. Por favor, intenta nuevamente.' + error,
+        'Error al enviar el mensaje. Por favor, intenta nuevamente.' + {
+          SMTP_HOST: process.env.SMTP_HOST,
+          SMTP_PORT: process.env.SMTP_PORT,
+          SMTP_USER: process.env.SMTP_USER,
+          NODE_ENV: process.env.NODE_ENV,
+        },
       );
     }
   }
