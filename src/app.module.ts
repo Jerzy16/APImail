@@ -1,10 +1,30 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { ContactModule } from './contact/contact.module';
 
 @Module({
-  imports: [],
+  imports: [ConfigModule.forRoot({
+    isGlobal: true,
+  }),
+  MailerModule.forRoot({
+    transport: {
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+    defaults: {
+      from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM}>`,
+    }
+  }),
+    ContactModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
