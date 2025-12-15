@@ -37,7 +37,7 @@ export class ContactService {
     } catch (error) {
       console.error('Error al enviar el email:', error);
       throw new InternalServerErrorException(
-        'Error al enviar el mensaje. Por favor, intenta nuevamente.',
+        'Error al enviar el mensaje. Por favor, intenta nuevamente.' + error,
       );
     }
   }
