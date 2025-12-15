@@ -18,6 +18,12 @@ import { ContactModule } from './contact/contact.module';
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
     },
     defaults: {
       from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM}>`,
