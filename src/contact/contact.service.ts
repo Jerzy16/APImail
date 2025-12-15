@@ -41,10 +41,9 @@ export class ContactService {
         JSON.stringify({
           SMTP_HOST: process.env.SMTP_HOST,
           SMTP_PORT: process.env.SMTP_PORT,
-          SMTP_USER: process.env.SMTP_USER,
-          NODE_ENV: process.env.NODE_ENV,
+          SMTP_USER: process.env.SMTP_USER
         }),
-      );
+      );  
     }
   }
 }
